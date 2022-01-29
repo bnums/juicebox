@@ -1,0 +1,11 @@
+A through table (like our post_tag table)
+
+CREATE TABLE puppy_tricks (
+  "puppyId" INTEGER REFERENCES puppies(id),
+  "trickId" INTEGER REFERENCE tricks(id),
+  UNIQUE ("puppyId", "trickId")
+);
+
+
+When we do square brackets, we are only taking a single item from the rows 
+When we do not hav square brackets, we get all of them. 
