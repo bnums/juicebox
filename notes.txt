@@ -9,3 +9,7 @@ CREATE TABLE puppy_tricks (
 
 When we do square brackets, we are only taking a single item from the rows 
 When we do not hav square brackets, we get all of them. 
+
+
+Middleware: Juicebox Part 2
+

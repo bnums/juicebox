@@ -106,7 +106,7 @@ async function updatePost(postId, fields = {}) {
 
   // build the set string
   const setString = Object.keys(fields).map(
-    (key, index) => `"${ key }"=$${ index + 1 }`
+    (key, index) => `"${key}"=$${index + 1}`
   ).join(', ');
 
   try {
@@ -114,8 +114,8 @@ async function updatePost(postId, fields = {}) {
     if (setString.length > 0) {
       await client.query(`
         UPDATE posts
-        SET ${ setString }
-        WHERE id=${ postId }
+        SET ${setString}
+        WHERE id=${postId}
         RETURNING *;
       `, Object.values(fields));
     }
@@ -128,14 +128,14 @@ async function updatePost(postId, fields = {}) {
     // make any new tags that need to be made
     const tagList = await createTags(tags);
     const tagListIdString = tagList.map(
-      tag => `${ tag.id }`
+      tag => `${tag.id}`
     ).join(', ');
 
     // delete any post_tags from the database which aren't in that tagList
     await client.query(`
       DELETE FROM post_tags
       WHERE "tagId"
-      NOT IN (${ tagListIdString })
+      NOT IN (${tagListIdString})
       AND "postId"=$1;
     `, [postId]);
 
@@ -182,6 +182,16 @@ async function getPostsByUser(userId) {
   }
 }
 
+async function getAllTags() {
+  try {
+    const { rows } = await client.query(`
+    SELECT * FROM tags;
+    `)
+    return rows
+  } catch (error) {
+    throw error;
+  }
+}
 
 async function createTags(tagList) {
   if (tagList.length === 0) {
@@ -213,7 +223,7 @@ async function createTags(tagList) {
     `, tagList);
     // select all tags where the name is in our taglist
     // return the rows from the query
-  
+
     return rows;
 
   } catch (error) {
@@ -295,8 +305,7 @@ async function getPostsByTagName(tagName) {
   } catch (error) {
     throw error;
   }
-} 
-
+}
 
 
 // and export them
@@ -314,5 +323,6 @@ module.exports = {
   createPostTag,
   addTagsToPost,
   getPostById,
-  getPostsByTagName
+  getPostsByTagName,
+  getAllTags
 }

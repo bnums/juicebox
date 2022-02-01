@@ -18,6 +18,7 @@ const {
   getPostsByTagName
 } = require('./index');
 
+const util = require('util');
 
 // this function should call a query which drops all tables from our database
 async function dropTables() {
@@ -206,7 +207,7 @@ async function testDB() {
 
     console.log("Calling getPostsByTagName with #happy");
     const postsWithHappy = await getPostsByTagName("#happy");
-    console.log("Result:", postsWithHappy);
+    console.log("Result:", util.inspect(postsWithHappy, false, 3, true));
 
     console.log("Finished database tests!");
   } catch (error) {
