@@ -5,6 +5,9 @@ const server = express();
 const apiRouter = require('./api');
 const { client } = require('./db');
 
+require('dotenv').config();
+
+
 //Morgan middleware
 server.use(morgan('dev'));
 server.use(express.json());
