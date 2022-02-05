@@ -3,11 +3,6 @@ const postsRouter = express.Router();
 const { getAllPosts, createPost, getPostById, updatePost } = require('../db');
 const { requireUser } = require('./utils');
 
-//Web token stuff
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const { JWT_SECRET } = process.env;
-
 
 postsRouter.use((res, req, next) => {
   console.log("A request is being made to /posts")
@@ -19,7 +14,7 @@ postsRouter.get('/', async (req, res, next) => {
 
   // the post is not active, but it belogs to the current user
   const posts = allPosts.filter(post => {
-    return post.active && (req.user && post.author.id === req.user.id);
+    return post.active || (req.user && post.author.id === req.user.id);
   });
 
   res.send({

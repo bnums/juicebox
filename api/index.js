@@ -9,7 +9,6 @@ require('dotenv').config();
 const { JWT_SECRET } = process.env;
 
 
-
 // set `req.user` if possible
 apiRouter.use(async (req, res, next) => {
   const prefix = 'Bearer ';

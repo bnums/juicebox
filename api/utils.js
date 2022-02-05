@@ -1,5 +1,3 @@
-
-
 // checks if user is logged in
 function requireUser(req, res, next) {
   if (!req.user) {
@@ -8,7 +6,6 @@ function requireUser(req, res, next) {
       message: "You must be logged in to perform this action"
     });
   }
-
   next();
 }
 
